@@ -112,7 +112,7 @@ public class SecondActivity extends AppCompatActivity {
 
                 else
                 {
-                    Intent startIntent= new Intent(getApplicationContext(), videoActivity.class);
+                    Intent startIntent= new Intent(getApplicationContext(), VideoActivity.class);
                     System.out.println(g);
                     startIntent.putExtra("gesture", g);
                     startIntent.putExtra("name", last_name);
