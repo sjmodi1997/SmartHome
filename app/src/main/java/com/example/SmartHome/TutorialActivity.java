@@ -14,75 +14,73 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+/**
+ * Class for TutorialActivity
+ */
 public class TutorialActivity extends AppCompatActivity {
-    Button p;
+    Button practiceButton;
+    private static final String androidResourceStr = "android.resource://";
+    private static final String SLASH = "/";
+    /**
+     * get the VideoPath of tutorial from GestureName
+     * @param gestureName
+     * @return videoPathStr
+     */
+    private String getVideoURI(String gestureName){
+        String videoUriStr = "";
+        if (gestureName.equals("Num0")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture0;
+        } else if (gestureName.equals("Num1")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture1;
+        } else if (gestureName.equals("Num2")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture2;
+        } else if (gestureName.equals("Num3")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture3;
+        } else if (gestureName.equals("Num4")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture4;
+        } else if (gestureName.equals("Num5")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture5;
+        } else if (gestureName.equals("Num6")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture6;
+        } else if (gestureName.equals("Num7")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture7;
+        } else if (gestureName.equals("Num8")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture8;
+        } else if (gestureName.equals("Num9")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.gesture9;
+        } else if (gestureName.equals("LightOn")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.lighton;
+        } else if (gestureName.equals("LightOff")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.lightoff;
+        } else if (gestureName.equals("FanOn")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.fanon;
+        } else if (gestureName.equals("FanOff")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.fanoff;
+        } else if (gestureName.equals("FanUp")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.increasefanspeed;
+        } else if (gestureName.equals("FanDown")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.decreasefanspeed;
+        } else if (gestureName.equals("SetThermo")) {
+            videoUriStr = androidResourceStr + getPackageName() + SLASH + R.raw.setthermo;
+        }
+        return videoUriStr;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        Intent get_previous_1= getIntent();
-        final String g= get_previous_1.getStringExtra("gesture");
-        final String last_name= get_previous_1.getStringExtra("name");
-        final int position= get_previous_1.getIntExtra("position",0);
+        Intent varsFromPreviousIntent = getIntent();
+        final String gestureName = varsFromPreviousIntent.getStringExtra("gesture");
+        final String lastName = varsFromPreviousIntent.getStringExtra("name");
+        final int position = varsFromPreviousIntent.getIntExtra("position", 0);
 
-        String sign = null;
+        String videoUriStr = getVideoURI(gestureName);
 
-        if(g.equals("Num0")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture0;
-        }
-        else if(g.equals("Num1")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture1;
-        }
-        else if(g.equals("Num2")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture2;
-        }
-        else if(g.equals("Num3")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture3;
-        }
-        else if(g.equals("Num4")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture4;
-        }
-        else if(g.equals("Num5")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture5;
-        }
-        else if(g.equals("Num6")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture6;
-        }
-        else if(g.equals("Num7")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture7;
-        }
-        else if(g.equals("Num8")){
-            sign= "android.resource://" + getPackageName() + "/" + R.raw.gesture8;
-        }
-        else if(g.equals("Num9")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.gesture9;
-        }
-        else if(g.equals("LightOn")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.lighton;
-        }
-        else if(g.equals("LightOff")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.lightoff;
-        }
-        else if(g.equals("FanOn")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.fanon;
-        }
-        else if(g.equals("FanOff")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.fanoff;
-        }
-        else if(g.equals("FanUp")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.increasefanspeed;
-        }
-        else if(g.equals("FanDown")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.decreasefanspeed;
-        }
-        else if(g.equals("SetThermo")){
-            sign= "android.resource://" + getPackageName() + "/" +R.raw.setthermo;
-        }
-
-        VideoView video= (VideoView) findViewById(R.id.gestureVideoView);
-        Uri vid= Uri.parse(sign);
-        video.setVideoURI(vid);
+        VideoView video = (VideoView) findViewById(R.id.gestureVideoView);
+        Uri vidUri = Uri.parse(videoUriStr);
+        video.setVideoURI(vidUri);
         video.start();
         video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -91,16 +89,13 @@ public class TutorialActivity extends AppCompatActivity {
             }
         });
 
-        p= (Button) findViewById(R.id.practiceButton);
-
-        p.setOnClickListener(new View.OnClickListener() {
+        practiceButton = (Button) findViewById(R.id.practiceButton);
+        practiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if( ContextCompat.checkSelfPermission(TutorialActivity.this,
+                if (ContextCompat.checkSelfPermission(TutorialActivity.this,
                         Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
-
                     if (ActivityCompat.shouldShowRequestPermissionRationale(TutorialActivity.this,
                             Manifest.permission.CAMERA)) {
                     } else {
@@ -108,14 +103,11 @@ public class TutorialActivity extends AppCompatActivity {
                                 new String[]{Manifest.permission.CAMERA},
                                 101);
                     }
-                }
-
-                else
-                {
-                    Intent startIntent= new Intent(getApplicationContext(), VideoActivity.class);
-                    System.out.println(g);
-                    startIntent.putExtra("gesture", g);
-                    startIntent.putExtra("name", last_name);
+                } else {
+                    Intent startIntent = new Intent(getApplicationContext(), VideoActivity.class);
+                    System.out.println(gestureName);
+                    startIntent.putExtra("gesture", gestureName);
+                    startIntent.putExtra("name", lastName);
                     startIntent.putExtra("position", position);
                     startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     getApplicationContext().startActivity(startIntent);
