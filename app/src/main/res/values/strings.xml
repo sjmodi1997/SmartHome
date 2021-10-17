@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">SmartHome</string>
+
+    <string-array name="gestures">
+        <item>Select Gesture</item>
+        <item>LightOn</item>
+        <item>LightOff</item>
+        <item>FanOn</item>
+        <item>FanOff</item>
+        <item>FanUp</item>
+        <item>FanDown</item>
+        <item>SetThermo</item>
+        <item>Num0</item>
+        <item>Num1</item>
+        <item>Num2</item>
+        <item>Num3</item>
+        <item>Num4</item>
+        <item>Num5</item>
+        <item>Num6</item>
+        <item>Num7</item>
+        <item>Num8</item>
+        <item>Num9</item>
+
+    </string-array>
+</resources>
