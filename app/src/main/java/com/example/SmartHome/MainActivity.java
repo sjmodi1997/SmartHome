@@ -17,7 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class  MainActivity extends AppCompatActivity {
+/**
+ * Main Activity class for the APP
+ */
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,42 +29,49 @@ public class  MainActivity extends AppCompatActivity {
 
         showPhoneStatePermission();
 
-        Spinner gestures= (Spinner) findViewById(R.id.dropDownButton);
+        final EditText firstNameTextEdit = (EditText) findViewById(R.id.firstName);
+        final EditText lastNameTextEdit = (EditText) findViewById(R.id.lastName);
 
-        ArrayAdapter<String> gestures_list= new ArrayAdapter<String>(MainActivity.this,
+        Spinner gesturesButton = (Spinner) findViewById(R.id.dropDownButton);
+        ArrayAdapter<String> gesturesList = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.gestures));
+        gesturesList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gesturesButton.setAdapter(gesturesList);
 
-        gestures_list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        gestures.setAdapter(gestures_list);
-
-        final EditText firstNameTextEdit= (EditText) findViewById(R.id.firstName);
-        final EditText lastNameTextEdit= (EditText) findViewById(R.id.lastName);
-
-        gestures.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        gesturesButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Method to Take Action when user selects the gesture
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                if(parent.getItemAtPosition(position).equals("Select Gesture")){
-
-                } else
-                {
-                    String gesture = parent.getItemAtPosition(position).toString();
-                    String lastName = lastNameTextEdit.getText().toString();
-                    Intent startIntent= new Intent(getApplicationContext(), SecondActivity.class);
-                    startIntent.putExtra("name", lastName);
-                    startIntent.putExtra("gesture", gesture);
-                    startIntent.putExtra("position", position);
-                    startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(startIntent);
+                String gesture = parent.getItemAtPosition(position).toString();
+                String lastName = lastNameTextEdit.getText().toString();
+                // Do not process 'Select Gesture'
+                if (!parent.getItemAtPosition(position).equals("Select Gesture")) {
+                    Intent tutorialActivityIntent = new Intent(getApplicationContext(), TutorialActivity.class);
+                    tutorialActivityIntent.putExtra("name", lastName);
+                    tutorialActivityIntent.putExtra("gesture", gesture);
+                    tutorialActivityIntent.putExtra("position", position);
+                    tutorialActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(tutorialActivityIntent);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-        }
+    }
 
+    /**
+     * Get the Permissions of the Devices
+     */
     private void showPhoneStatePermission() {
         int permissionCheck = ContextCompat.checkSelfPermission(
                 this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -73,17 +83,25 @@ public class  MainActivity extends AppCompatActivity {
             } else {
                 requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 100);
             }
-        } else {
-
         }
+
+        return;
     }
 
-    private void showExplanation(String title,
+    /**
+     * Method to Explain the Permission Requirements
+     *
+     * @param heading
+     * @param message
+     * @param permission
+     * @param permissionRequestCode
+     */
+    private void showExplanation(String heading,
                                  String message,
                                  final String permission,
                                  final int permissionRequestCode) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title)
+        builder.setTitle(heading)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -93,8 +111,13 @@ public class  MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    /**
+     * Method to request Permission from User
+     * @param permissionName
+     * @param permissionRequestCode
+     */
     private void requestPermission(String permissionName, int permissionRequestCode) {
         ActivityCompat.requestPermissions(this,
                 new String[]{permissionName}, permissionRequestCode);
     }
-    }
+}

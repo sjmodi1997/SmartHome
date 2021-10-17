@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class SecondActivity extends AppCompatActivity {
+public class TutorialActivity extends AppCompatActivity {
     Button p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +97,14 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if( ContextCompat.checkSelfPermission(SecondActivity.this,
+                if( ContextCompat.checkSelfPermission(TutorialActivity.this,
                         Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(SecondActivity.this,
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(TutorialActivity.this,
                             Manifest.permission.CAMERA)) {
                     } else {
-                        ActivityCompat.requestPermissions(SecondActivity.this,
+                        ActivityCompat.requestPermissions(TutorialActivity.this,
                                 new String[]{Manifest.permission.CAMERA},
                                 101);
                     }
